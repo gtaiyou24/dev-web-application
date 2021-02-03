@@ -1,0 +1,23 @@
+version: "3.3"
+
+# サービス定義
+services:
+  # DBサービス
+  db:
+    build: ./db  # /path/to/myproject/dbフォルダにあるDockerfileを指定
+    ports:
+      - "3306:3306"  # app→dbで接続するために3306ポートを開放
+
+  # appサービス
+  app:
+    build: ./mysite
+    env_file: ./mysite/env
+    links:
+      - db:db
+    command: sh -c "./wait-for-it.sh db:3306; python3 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./mysite:/home/app
+    ports:
+      - "8080:8000"
+    depends_on:
+      - db

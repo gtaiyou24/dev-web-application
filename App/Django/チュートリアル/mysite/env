@@ -1,0 +1,5 @@
+DB_HOST=db
+DB_NAME=mysite
+DB_USERNAME=mysite
+DB_PASSWORD=mysite
+DB_PORT=3306
